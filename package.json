@@ -1,0 +1,41 @@
+{
+  "name": "webpack-theme",
+  "version": "1.0.0",
+  "description": "A Theme bundled by Webpack",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run build && gulp wpPot",
+    "package": "gulp",
+    "build": "webpack --mode production --env production",
+    "start": "webpack-dev-server --mode development --env development"
+  },
+  "author": "Ignacio Cruz <igmoweb@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.3.1",
+    "babel-loader": "^8.0.4",
+    "chokidar": "^2.0.4",
+    "clean-webpack-plugin": "^1.0.0",
+    "css-loader": "^1.0.1",
+    "gulp": "git+https://github.com/gulpjs/gulp.git#v4.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-run-command": "0.0.9",
+    "gulp-wp-pot": "^2.3.3",
+    "gulp-zip": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.10.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-merge": "^4.1.4",
+    "write-file-webpack-plugin": "^4.5.0"
+  }
+}

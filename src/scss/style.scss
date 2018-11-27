@@ -1,0 +1,10 @@
+@charset 'utf-8';
+
+
+// WP Styles
+@import "wp/accessibility";
+@import "wp/wp-overrides";
+
+body {
+	background:red;
+}
