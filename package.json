@@ -4,7 +4,7 @@
   "description": "A Theme bundled by Webpack",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build && gulp wpPot && composer install",
+    "postinstall": "npm run build && gulp wpPot && npm run composer:install",
     "composer": "docker run --rm --interactive --volume $PWD:/app composer",
     "composer:install": "npm run composer -- install",
     "package": "gulp",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^9.3.1",
     "babel-loader": "^8.0.4",
