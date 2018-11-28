@@ -1,6 +1,5 @@
 const autoprefixer = require( 'autoprefixer' );
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ManifestPlugin = require('webpack-manifest-plugin');
+const ManifestPlugin = require( 'webpack-manifest-plugin' );
 const chokidar = require( 'chokidar' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
@@ -13,10 +12,11 @@ module.exports = {
 	 */
 	devServer: () => ({
 		devServer: {
+
 			// Watch for PHP files and reload the page
-			before ( app, server ) {
+			before( app, server ) {
 				const files = [
-					"./**/*.php"
+					'./**/*.php'
 				];
 
 				chokidar
@@ -28,34 +28,36 @@ module.exports = {
 						ignorePermissionErrors: true,
 						persistent: true,
 						usePolling: true
-					} )
+					})
 					.on( 'all', () => {
-						server.sockWrite( server.sockets, "content-changed" );
-					} );
-			},
+						server.sockWrite( server.sockets, 'content-changed' );
+					});
+			}
 		}
 	}),
 
 	/**
 	 * Sass loader config
 	 */
-	loadSass: ( { use = [], filename = '[name].[hash].css' } = {} ) => {
+	loadSass: ({ use = [], filename = '[name].[hash].css' } = {}) => {
+
+
 		// Output extracted CSS to a file
-		const plugin = new MiniCssExtractPlugin( {
-			filename,
-		} );
+		const plugin = new MiniCssExtractPlugin({
+			filename
+		});
 
 		return {
 			module: {
 				rules: [
 					{
 						test: /\.scss$/,
-						use,
-					},
-				],
+						use
+					}
+				]
 			},
-			plugins: [ plugin ],
-		}
+			plugins: [ plugin ]
+		};
 	},
 
 	/**
@@ -65,7 +67,7 @@ module.exports = {
 		loader: 'postcss-loader',
 		options: {
 			browsers: config.COMPATIBILITY,
-			plugins: () => [ autoprefixer() ],
+			plugins: () => [ autoprefixer() ]
 		}
 	}),
 
@@ -84,7 +86,7 @@ module.exports = {
 							options: {
 								presets: [ '@babel/preset-env', '@babel/preset-react' ]
 							}
-						},
+						}
 					]
 				}
 			]
@@ -95,7 +97,7 @@ module.exports = {
 	 * Webpack sourcemaps config
 	 */
 	generateSourceMaps: ({ type }) => ({
-		devtool: type,
+		devtool: type
 	}),
 
 	/**
@@ -103,5 +105,5 @@ module.exports = {
 	 */
 	manifest: () => ({
 		plugins: [ new ManifestPlugin() ]
-	}),
+	})
 };

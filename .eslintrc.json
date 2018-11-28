@@ -1,0 +1,6 @@
+{
+  "extends": "wordpress",
+  "env": {
+    "es6": true
+  }
+}

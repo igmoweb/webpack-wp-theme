@@ -1,36 +1,36 @@
 const path = require( 'path' );
 const merge = require( 'webpack-merge' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const WriteFilePlugin = require('write-file-webpack-plugin');
-const webpack = require('webpack');
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const WriteFilePlugin = require( 'write-file-webpack-plugin' );
+const webpack = require( 'webpack' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 
 const config = require( './config.js' );
 const parts = require( './webpack-config/webpack.parts' );
 
-const cleanPlugin = new CleanWebpackPlugin( [ path.resolve(__dirname, 'dist') ] );
+const cleanPlugin = new CleanWebpackPlugin([ path.resolve( __dirname, 'dist' ) ]);
 
-const commonConfig = merge( [
+const commonConfig = merge([
 	{
 		entry: config.PATHS.entries,
 		output: {
-			path: path.resolve( __dirname, config.PATHS.dist ),
-		},
+			path: path.resolve( __dirname, config.PATHS.dist )
+		}
 	},
 	{
 		devtool: 'inline-source-map'
 	},
 	parts.loadJavaScript(),
-	parts.manifest(),
-] );
+	parts.manifest()
+]);
 
-const productionConfig = merge( [
+const productionConfig = merge([
 	{
 		output: {
 			filename: '[name].[hash].js'
 		}
 	},
-	parts.loadSass( {
+	parts.loadSass({
 		use: [
 			'style-loader',
 			MiniCssExtractPlugin.loader,
@@ -42,20 +42,20 @@ const productionConfig = merge( [
 					includePaths: config.PATHS.sassIncludes
 				}
 			}
-		],
-	} ),
-	parts.generateSourceMaps( { type: 'source-map' } ),
+		]
+	}),
+	parts.generateSourceMaps({ type: 'source-map' }),
 	{
 		plugins: [ cleanPlugin ]
 	}
-] );
+]);
 
-const developmentConfig = merge( [
+const developmentConfig = merge([
 	{
 		output: {
 			filename: '[name].js',
 			hotUpdateChunkFilename: 'hot/hot-update.js',
-			hotUpdateMainFilename: 'hot/hot-update.json',
+			hotUpdateMainFilename: 'hot/hot-update.json'
 		}
 	},
 	{
@@ -66,7 +66,7 @@ const developmentConfig = merge( [
 		]
 	},
 	parts.devServer(),
-	parts.loadSass( {
+	parts.loadSass({
 		use: [
 			'style-loader',
 			MiniCssExtractPlugin.loader,
@@ -79,14 +79,14 @@ const developmentConfig = merge( [
 			}
 		],
 		filename: '[name].css'
-	} ),
-	parts.generateSourceMaps( { type: 'eval' } ),
-] );
+	}),
+	parts.generateSourceMaps({ type: 'eval' })
+]);
 
 module.exports = mode => {
-	if ( mode === 'production' ) {
-		return merge( commonConfig, productionConfig, { mode } );
+	if ( 'production' === mode ) {
+		return merge( commonConfig, productionConfig, { mode });
 	}
 
-	return merge( commonConfig, developmentConfig, { mode } );
+	return merge( commonConfig, developmentConfig, { mode });
 };
