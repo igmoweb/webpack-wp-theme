@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run build && gulp wpPot && composer install",
+    "composer": "docker run --rm --interactive --volume $PWD:/app composer",
+    "composer:install": "npm run composer -- install",
     "package": "gulp",
     "build": "webpack --mode production --env production",
     "start": "webpack-dev-server --mode development --env development",
-    "lint:php": "./vendor/bin/phpcs --runtime-set testVersion 5.4 --extensions=php --standard=phpcs.ruleset.xml -s .",
+    "lint:php": "npm run composer -- run-script lint",
     "lint:js": "eslint .",
     "lint": "npm run lint:js && npm run lint:php",
-    "fix:php": "./vendor/bin/phpcbf --standard=phpcs.ruleset.xml .",
+    "fix:php": "npm run composer -- run-script format",
     "fix:js": "eslint . --fix"
   },
   "author": "Ignacio Cruz <igmoweb@gmail.com>",

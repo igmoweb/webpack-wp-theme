@@ -2,19 +2,18 @@
 <ruleset name="Webpack Theme">
 	<description>Sniffs for WordPress Webpack Theme</description>
 
-	<rule ref="PHPCompatibility"/>
-
-	<config name="testVersion" value="5.6"/>
 	<config name="text_domain" value="webpack-theme,default"/>
 
 	<arg value="ps"/>
 	<arg name="extensions" value="php"/>
 
+	<file>.</file>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/package/*</exclude-pattern>
 	<exclude-pattern>*/dist/*</exclude-pattern>
 
+	<rule ref="PHPCompatibility"/>
 	<rule ref="WordPress-Docs"/>
 	<rule ref="WordPress.WP.I18n"/>
 	<rule ref="WPThemeReview" />
