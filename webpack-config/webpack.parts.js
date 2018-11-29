@@ -2,9 +2,8 @@ const autoprefixer = require( 'autoprefixer' );
 const ManifestPlugin = require( 'webpack-manifest-plugin' );
 const chokidar = require( 'chokidar' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const OptimizeCSSAssetsPlugin = require(
-	'optimize-css-assets-webpack-plugin'
-);
+const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
+const WebpackRTLPlugin = require( 'webpack-rtl-plugin' );
 const cssnano = require( 'cssnano' );
 
 const config = require( '../config.js' );
@@ -47,10 +46,6 @@ module.exports = {
 
 
 		// Output extracted CSS to a file
-		const plugin = new MiniCssExtractPlugin({
-			filename
-		});
-
 		return {
 			module: {
 				rules: [
@@ -71,7 +66,9 @@ module.exports = {
 					}
 				]
 			},
-			plugins: [ plugin ]
+			plugins: [
+				new MiniCssExtractPlugin({ filename })
+			]
 		};
 	},
 
@@ -119,7 +116,16 @@ module.exports = {
 	 * Generate a manifest JSON file in dist folder
 	 */
 	manifest: () => ({
-		plugins: [ new ManifestPlugin() ]
+		plugins: [ new ManifestPlugin({
+			map: ( file ) => {
+
+				// Some hack for the manifest plugin
+				if ( /\.rtl\.css$/.test( file.path ) ) {
+					file.name = file.name.replace( '.css', '.rtl.css' );
+				}
+				return file;
+			}
+		}) ]
 	}),
 
 	/**
@@ -141,5 +147,12 @@ module.exports = {
 				canPrint: false
 			})
 		]
+	}),
+
+	/**
+	 * CSS RTL parsing
+	 */
+	rtl: () => ({
+		plugins: [ new WebpackRTLPlugin() ]
 	})
 };

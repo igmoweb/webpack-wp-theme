@@ -21,7 +21,8 @@ const commonConfig = merge([
 		devtool: 'inline-source-map'
 	},
 	parts.loadJavaScript(),
-	parts.manifest()
+	parts.manifest(),
+	parts.rtl()
 ]);
 
 const productionConfig = merge([
@@ -45,10 +46,10 @@ const productionConfig = merge([
 		]
 	}),
 	parts.generateSourceMaps({ type: 'source-map' }),
+	parts.minifyCSS(),
 	{
 		plugins: [ cleanPlugin ]
-	},
-	parts.minifyCSS()
+	}
 ]);
 
 const developmentConfig = merge([
