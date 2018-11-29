@@ -2,6 +2,10 @@ const autoprefixer = require( 'autoprefixer' );
 const ManifestPlugin = require( 'webpack-manifest-plugin' );
 const chokidar = require( 'chokidar' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const OptimizeCSSAssetsPlugin = require(
+	'optimize-css-assets-webpack-plugin'
+);
+const cssnano = require( 'cssnano' );
 
 const config = require( '../config.js' );
 
@@ -53,6 +57,17 @@ module.exports = {
 					{
 						test: /\.scss$/,
 						use
+					},
+					{
+						test: /\.(png|jpg|gif|svg)$/,
+						use: {
+							loader: 'file-loader',
+							options: {
+								name: `${config.PATHS.images.relativePath}/[name].[ext]`,
+								publicPath: './',
+								outputPath: `${config.PATHS.images.outputPath}`
+							}
+						}
 					}
 				]
 			},
@@ -105,5 +120,26 @@ module.exports = {
 	 */
 	manifest: () => ({
 		plugins: [ new ManifestPlugin() ]
+	}),
+
+	/**
+	 * CSS minifier config
+	 */
+	minifyCSS: () => ({
+		plugins: [
+			new OptimizeCSSAssetsPlugin({
+				cssProcessor: cssnano,
+				cssProcessorOptions: {
+					discardComments: {
+						removeAll: true
+					},
+
+					// Run cssnano in safe mode to avoid
+					// potentially unsafe transformations.
+					safe: true
+				},
+				canPrint: false
+			})
+		]
 	})
 };

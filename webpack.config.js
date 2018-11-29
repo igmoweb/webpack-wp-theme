@@ -47,7 +47,8 @@ const productionConfig = merge([
 	parts.generateSourceMaps({ type: 'source-map' }),
 	{
 		plugins: [ cleanPlugin ]
-	}
+	},
+	parts.minifyCSS()
 ]);
 
 const developmentConfig = merge([
